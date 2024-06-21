@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expérience Vidéo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2, h3 {
+            color:  #06101E;
+        }
+        button {
+            background-color:  #2C60A8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #2C60A8;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        .likert-container {
+            display: grid;
+            grid-template-columns: auto repeat(7, 1fr) auto;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .likert-container div {
+            text-align: center;
+        }
+        .likert-container label {
+            margin: 0;
+        }
+        .video-container {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+	 .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-container img {
+            max-width: 75%;
+            height: auto;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="ethicsPage">
+        <h1>Copyrights</h1>
+        <p>By undertaking this job, you declare that you understand, agree and fully accept to abide to the conditions below:</p>
+        <p>All material on this page, including, videos, text is covered by Copyright. You may not copy, reproduce, distribute, publish, display, perform, modify, create derivative works, transmit, or in any way exploit any content on this page, nor may you distribute any part of this content over any network, including a local area network, sell or offer it for sale, or use such content to construct any kind of database. Retrieving, copying, or distributing these files violates the copyright protection law. You must abide international law in accessing this directory.
+</p>     
+        <p>By accepting to provide consent you state that you are 18 years or older.</p>
+        <button onclick="goToStudyPurpose()">Suivant</button>
+    </div>
+
+    <div class="container hidden" id="studyPurposePage">
+        <h1>Thank you for considering participating in this study</h1>
+        <p>The purpose of this study is to <B>evaluate a facial expression generation model for virtual counselors</B> in the context of <B>Motivational interviewing</B>.
+During this study, you will be asked to watch videos and fill out questionnaires.</p>
+		<p>All information you provide will be confidential and your anonymity will be protected throughout the study. No information that would allow identifying you or tracing you back will be collected (name, e-mail, IP addresses...).  The collected data may contribute to research publications and/or conference presentations. If you have any questions regarding this study you can contact the researchers before starting the study.</p>
+        <p> Contact : 
+Nezih Younsi (younsi@isir.upmc.fr)
+Catherine Pelachaud (catherine.pelachaud@upmc.fr)
+Laurence Chaby(Chaby@isir.upmc.fr)</p>
+		<button onclick="goToInstructions()">Next</button>
+    </div>
+
+    <div class="container hidden" id="homePage">
+        <h1>Perceptual study</h1>
+        <p>This study includes two different phases of evaluation. Both phases consist on watching videos that features an interactions between a virtual counselor and a human client.
+After watching each video, you will be asked to answer to questions related to the displayed interaction.</p>
+        <p>The first phase include 12 short videos of different interactions between a virtual counselor and a human client</p>
+        <ul>
+            <li>Please watch attentively each video.</li>
+            <li>Answer to each item on a scale going from 1 to 7</li>
+            <li>Click on the "Next" button to see the next video</li>
+        </ul>
+	
+	<div class="image-container">
+            <img src="https://i.imgur.com/jwJ2Fq6.png" alt="Virtual counselor and Human">
+        </div>
+		<label for="participantId">Entrez your prolific ID:</label>
+		<input type="text" id="participantId" required>
+        <button onclick="startExperience()">Start the study</button>
+    </div>
+
+    <div class="container hidden" id="videoPage">
+        <div id="videoPlayer" class="video-container"></div>
+        <div id="questionnaire">
+            <h2> </h2>
+            <form id="questionForm">
+                <h3>How did you perceive the virtual counselor’s attitude towards the human?
+</h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+
+                    <label>Diverted</label>
+                    <input type="radio" name="diverted_attentive" value="1" required>
+                    <input type="radio" name="diverted_attentive" value="2">
+                    <input type="radio" name="diverted_attentive" value="3">
+                    <input type="radio" name="diverted_attentive" value="4">
+                    <input type="radio" name="diverted_attentive" value="5">
+                    <input type="radio" name="diverted_attentive" value="6">
+                    <input type="radio" name="diverted_attentive" value="7">
+                    <label>Attentive</label>
+
+                    <label>Unpleasant</label>
+                    <input type="radio" name="unpleasant_pleasant" value="1" required>
+                    <input type="radio" name="unpleasant_pleasant" value="2">
+                    <input type="radio" name="unpleasant_pleasant" value="3">
+                    <input type="radio" name="unpleasant_pleasant" value="4">
+                    <input type="radio" name="unpleasant_pleasant" value="5">
+                    <input type="radio" name="unpleasant_pleasant" value="6">
+                    <input type="radio" name="unpleasant_pleasant" value="7">
+                    <label>Pleasant</label>
+
+                    <label>Inert</label>
+                    <input type="radio" name="inert_expressive" value="1" required>
+                    <input type="radio" name="inert_expressive" value="2">
+                    <input type="radio" name="inert_expressive" value="3">
+                    <input type="radio" name="inert_expressive" value="4">
+                    <input type="radio" name="inert_expressive" value="5">
+                    <input type="radio" name="inert_expressive" value="6">
+                    <input type="radio" name="inert_expressive" value="7">
+                    <label>Expressive</label>
+
+                    <label>Cold</label>
+                    <input type="radio" name="cold_warm" value="1" required>
+                    <input type="radio" name="cold_warm" value="2">
+                    <input type="radio" name="cold_warm" value="3">
+                    <input type="radio" name="cold_warm" value="4">
+                    <input type="radio" name="cold_warm" value="5">
+                    <input type="radio" name="cold_warm" value="6">
+                    <input type="radio" name="cold_warm" value="7">
+                    <label>Warm</label>
+                </div>
+
+                <h3>How do you characterize the virtual counselor’s facial expressions?</h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+
+                    <label>Incoherent</label>
+                    <input type="radio" name="incoherent_coherent" value="1" required>
+                    <input type="radio" name="incoherent_coherent" value="2">
+                    <input type="radio" name="incoherent_coherent" value="3">
+                    <input type="radio" name="incoherent_coherent" value="4">
+                    <input type="radio" name="incoherent_coherent" value="5">
+                    <input type="radio" name="incoherent_coherent" value="6">
+                    <input type="radio" name="incoherent_coherent" value="7">
+                    <label>Coherent</label>
+
+                    <label>Out of phase</label>
+                    <input type="radio" name="out_of_phase_in_phase" value="1" required>
+                    <input type="radio" name="out_of_phase_in_phase" value="2">
+                    <input type="radio" name="out_of_phase_in_phase" value="3">
+                    <input type="radio" name="out_of_phase_in_phase" value="4">
+                    <input type="radio" name="out_of_phase_in_phase" value="5">
+                    <input type="radio" name="out_of_phase_in_phase" value="6">
+                    <input type="radio" name="out_of_phase_in_phase" value="7">
+                    <label>In phase</label>
+
+                    <label>Not aligned</label>
+                    <input type="radio" name="not_aligned_aligned_temporally" value="1" required>
+                    <input type="radio" name="not_aligned_aligned_temporally" value="2">
+                    <input type="radio" name="not_aligned_aligned_temporally" value="3">
+                    <input type="radio" name="not_aligned_aligned_temporally" value="4">
+                    <input type="radio" name="not_aligned_aligned_temporally" value="5">
+                    <input type="radio" name="not_aligned_aligned_temporally" value="6">
+                    <input type="radio" name="not_aligned_aligned_temporally" value="7">
+                    <label>Aligned temporally</label>
+                </div>
+                <button type="button" onclick="nextVideo()">Next</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container hidden" id="endFirstPartPage">
+        <h1>Second Phase</h1>
+        <p>You have succesfully finished the first phase</p>
+        <p>Instruction of the second phase: </p>
+        <ul>
+            <li>You are now going to watch three videos, that features longer interactions between the virtual counselor and human clients.</li>
+            <li>After attentively watching each video, asnwer to each item on scale from 1 to 7.</li>
+			<li>Click on the "Next" button to watch the next video.</li>
+        </ul>
+        <button onclick="startSecondPart()">Start the second phase</button>
+    </div>
+
+    <div class="container hidden" id="secondPartPage">
+        <div id="secondPartVideoPlayer" class="video-container"></div>
+        <div id="secondPartQuestionnaire">
+            <h2> How much do you agree with the following statements:</h2>
+            <form id="secondPartQuestionForm">
+                <h3>The virtual counselor helps the human to <B>change behavior</B></h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+
+                    <label>Not at all</label>
+                    <input type="radio" name="therapist_help_talk" value="1" required>
+                    <input type="radio" name="therapist_help_talk" value="2">
+                    <input type="radio" name="therapist_help_talk" value="3">
+                    <input type="radio" name="therapist_help_talk" value="4">
+                    <input type="radio" name="therapist_help_talk" value="5">
+                    <input type="radio" name="therapist_help_talk" value="6">
+                    <input type="radio" name="therapist_help_talk" value="7">
+                    <label>Completely</label>
+				</div>
+				<h3>The virtual counselor helps the human to <B>feel hopeful</B> about changing behavior</h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+				
+                    <label>Not at all</label>
+                    <input type="radio" name="therapist_help_hopeful" value="1" required>
+                    <input type="radio" name="therapist_help_hopeful" value="2">
+                    <input type="radio" name="therapist_help_hopeful" value="3">
+                    <input type="radio" name="therapist_help_hopeful" value="4">
+                    <input type="radio" name="therapist_help_hopeful" value="5">
+                    <input type="radio" name="therapist_help_hopeful" value="6">
+                    <input type="radio" name="therapist_help_hopeful" value="7">
+                    <label>Completely</label>
+				</div>
+				<h3>The virtual counselor helps the human to feel confident in his/her ability to <B>change behavior</B> </h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+				
+                    <label>Not at all</label>
+                    <input type="radio" name="therapist_help_confident" value="1" required>
+                    <input type="radio" name="therapist_help_confident" value="2">
+                    <input type="radio" name="therapist_help_confident" value="3">
+                    <input type="radio" name="therapist_help_confident" value="4">
+                    <input type="radio" name="therapist_help_confident" value="5">
+                    <input type="radio" name="therapist_help_confident" value="6">
+                    <input type="radio" name="therapist_help_confident" value="7">
+                    <label>Completely</label>
+                </div>
+
+                <h3>The virtual counselor and the human <B>collaborates</B> on setting goals for the therapy</h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+
+                    <label>Not at all</label>
+                    <input type="radio" name="client_collaborate_goals" value="1" required>
+                    <input type="radio" name="client_collaborate_goals" value="2">
+                    <input type="radio" name="client_collaborate_goals" value="3">
+                    <input type="radio" name="client_collaborate_goals" value="4">
+                    <input type="radio" name="client_collaborate_goals" value="5">
+                    <input type="radio" name="client_collaborate_goals" value="6">
+                    <input type="radio" name="client_collaborate_goals" value="7">
+                    <label>Completely</label>
+				</div>
+				<h3>The virtual counselor and the human are working towards <B>mutually</B> agreed-upon goals</h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+                    <label>Not at all</label>
+                    <input type="radio" name="client_mutual_goals" value="1" required>
+                    <input type="radio" name="client_mutual_goals" value="2">
+                    <input type="radio" name="client_mutual_goals" value="3">
+                    <input type="radio" name="client_mutual_goals" value="4">
+                    <input type="radio" name="client_mutual_goals" value="5">
+                    <input type="radio" name="client_mutual_goals" value="6">
+                    <input type="radio" name="client_mutual_goals" value="7">
+                    <label>Completely</label>
+				</div>
+				<h3>The virtual counselor <B>cares about</B> the human even when he/she does things that the virtual counselor does not approve of</h3>
+                <div class="likert-container">
+                    <div></div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div></div>
+                    <label>Not at all</label>
+                    <input type="radio" name="client_therapist_cares" value="1" required>
+                    <input type="radio" name="client_therapist_cares" value="2">
+                    <input type="radio" name="client_therapist_cares" value="3">
+                    <input type="radio" name="client_therapist_cares" value="4">
+                    <input type="radio" name="client_therapist_cares" value="5">
+                    <input type="radio" name="client_therapist_cares" value="6">
+                    <input type="radio" name="client_therapist_cares" value="7">
+                    <label>Completely</label>
+                </div>
+                <button type="button" onclick="nextSecondPartVideo()">Next</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container hidden" id="endPage">
+        <h1>Thank you for your participation</h1>
+        <p>Your answers were succesfully saved</p>
+		<p>Please click on the link below:</p>
+		<a href="https://www.prolific.co/" target="_blank">Redirection to prolific</a>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDj0L32CgxECBVLdqK2lxvcmwGWMEEEmuk",
+            authDomain: "thirdparty-5ba1d.firebaseapp.com",
+            projectId: "thirdparty-5ba1d",
+            storageBucket: "thirdparty-5ba1d.appspot.com",
+            messagingSenderId: "457944062408",
+            appId: "1:457944062408:web:09cf36f3f1ec0ca618c8fd",
+            measurementId: "G-2GC43NCVG9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const allGroups = [
+
+            [
+		{ id: 'video9_GT', videoId: '1CpjYrM9zy_6_0Xn46oYmG-S3prUjoa4P' },
+                { id: 'video9_Model', videoId: '15h82VAD1Aqqd5g9K5Tqb8Vhh4BkAsHu1' },
+                { id: 'video9_Random', videoId: '1NIcighnUMKCUz-zxUDh6qMozMdixxsNa' }
+            ],
+            [
+                { id: 'video10_GT', videoId: '1Ki5UwK9OLbXTEhRCnpWJF7uvEv2mYJG3' },
+                { id: 'video10_Model', videoId: '1tlCBNrtP1I_b0W3UWtYhu2pgiKi6sqar' },
+                { id: 'video10_Random', videoId: '1kthN-Y2FSe6ElzCVWl3Yxowqvy4uZm-c' }
+            ],
+			
+	    [
+                { id: 'video3_GT', videoId: '1byN_WJzaxdPJIwwGuQmX832J3mqzyZt8' },
+                { id: 'video3_Model', videoId: '1h32hRxxTAWBc21rPYpOHVlHpV_g1TB1J' },
+                { id: 'video3_Random', videoId: '11QyQZj4fXpyUwy-RcR671dmUSVMmrRz3' }
+            ],
+            [
+                { id: 'video4_GT', videoId: '1FSECLcS61wX3sRdG7t8gwV0hg0mgsYCc' },
+                { id: 'video4_Model', videoId: '1o3DBiskq6Z6kDoq_696rEL6Cu57Z4eHl' },
+                { id: 'video4_Random', videoId: '1kfzKJxN85KPV06EO-wxGw9Y69GowfavZ' }
+            ],
+        ];
+
+        const secondPartVideos = [
+            { id: 'Video_Full_1_GT', videoId: '1dZnM2psIUV89p8jZrLAg2Yf_52Z0UhaS' },
+            { id: 'Video_Full_1_MODEL', videoId: '1LDq0Wi3UyWVp3b5JyYDAQ2C5FfqC2yUc' },
+            { id: 'Video_Full_1_RANDOM', videoId: '1ywhaCEpwHxrkNfzO21SZTmC7EPvuhY7y' },
+            { id: 'Video_Full_2_GT', videoId: '1F32SXuIBMA9QbrvWkUSA3tL2q6VDgOE1' },
+            { id: 'Video_Full_2_Model', videoId: '1A1coCiHULXsA8KxT3NJlHwGODjT7C7yL' },
+            { id: 'Video_Full_2_RANDOM', videoId: '1K966T5UrY28Z0JpVmJtNOptUdkFQzCie' },
+            { id: 'Video_Full_3_GT', videoId: '194uN11BtE9IXlc_XQrn7Ip1S0dqj5RVN' },
+            { id: 'Video_Full_3_Model', videoId: '15XVgZMVGOxCKKTz-pTQi3Zt7uSE8GM8e' },
+            { id: 'Video_Full_3_Random', videoId: '1SZg9eE_lswrQSZ5JXZZ8Y0DmQV5AZTHj' }
+        ];
+
+        let selectedVideos = [];
+        let secondPartSelectedVideos = [];
+        let currentVideoIndex = 0;
+        let participantId;
+        let responses = [];
+
+        window.goToStudyPurpose = function goToStudyPurpose() {
+            document.getElementById('ethicsPage').classList.add('hidden');
+            document.getElementById('studyPurposePage').classList.remove('hidden');
+        }
+
+        window.goToInstructions = function goToInstructions() {
+            document.getElementById('studyPurposePage').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+        }
+
+        window.startExperience = function startExperience() {
+			  // Get the participant ID from the input field
+			const participantIdInput = document.getElementById('participantId').value;
+			if (!participantIdInput) {
+				alert('Veuillez entrer votre ID de participant.');
+        		return;
+			}
+            const selectedGroups = getRandomGroups();
+            selectedVideos = flattenAndRandomize(selectedGroups);
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('videoPage').classList.remove('hidden');
+            loadVideo();
+        }
+
+        function generateParticipantId() {
+            return 'participant_' + Math.floor(Math.random() * 1000000);
+        }
+
+        function getRandomGroups() {
+            const shuffled = allGroups.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 4);
+        }
+
+        function flattenAndRandomize(groups) {
+            const videos = [];
+            groups.forEach(group => {
+                videos.push(...group);
+            });
+            return videos.sort(() => 0.5 - Math.random());
+        }
+
+        function loadVideo() {
+            const video = selectedVideos[currentVideoIndex];
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.innerHTML = `<iframe src="https://drive.google.com/file/d/${video.videoId}/preview" allowfullscreen></iframe>`;
+        }
+
+        window.nextVideo = function nextVideo() {
+            const form = document.getElementById('questionForm');
+            if (!form.checkValidity()) {
+                alert('Veuillez répondre à toutes les questions.');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const response = { id: participantId, videoId: selectedVideos[currentVideoIndex].id };
+            formData.forEach((value, key) => {
+                response[key] = value;
+            });
+            responses.push(response);
+
+            currentVideoIndex++;
+            if (currentVideoIndex < selectedVideos.length) {
+                form.reset();
+                loadVideo();
+            } else {
+                endFirstPart();
+            }
+        }
+
+        function endFirstPart() {
+            document.getElementById('videoPage').classList.add('hidden');
+            document.getElementById('endFirstPartPage').classList.remove('hidden');
+        }
+
+	    window.startSecondPart = function startSecondPart() {
+			// Filter videos by type
+			const modelVideos = secondPartVideos.filter(video => video.id.includes('Model'));
+			const randomVideos = secondPartVideos.filter(video => video.id.includes('Random'));
+			const gtVideos = secondPartVideos.filter(video => video.id.includes('GT'));
+
+			// Randomly select one video from each category
+			const selectedModelVideo = modelVideos[Math.floor(Math.random() * modelVideos.length)];
+			const selectedRandomVideo = randomVideos[Math.floor(Math.random() * randomVideos.length)];
+			const selectedGtVideo = gtVideos[Math.floor(Math.random() * gtVideos.length)];
+
+			// Combine selected videos
+			secondPartSelectedVideos = [selectedModelVideo, selectedRandomVideo, selectedGtVideo];
+
+			// Shuffle the selected videos
+			secondPartSelectedVideos = secondPartSelectedVideos.sort(() => 0.5 - Math.random());
+
+			currentVideoIndex = 0;
+			document.getElementById('endFirstPartPage').classList.add('hidden');
+			document.getElementById('secondPartPage').classList.remove('hidden');
+			loadSecondPartVideo();
+		}
+
+        function loadSecondPartVideo() {
+            const video = secondPartSelectedVideos[currentVideoIndex];
+            const videoPlayer = document.getElementById('secondPartVideoPlayer');
+            videoPlayer.innerHTML = `<iframe src="https://drive.google.com/file/d/${video.videoId}/preview" allowfullscreen></iframe>`;
+        }
+
+        window.nextSecondPartVideo = function nextSecondPartVideo() {
+            const form = document.getElementById('secondPartQuestionForm');
+            if (!form.checkValidity()) {
+                alert('Veuillez répondre à toutes les questions.');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const response = { id: participantId, videoId: secondPartSelectedVideos[currentVideoIndex].id };
+            formData.forEach((value, key) => {
+                response[key] = value;
+            });
+            responses.push(response);
+
+            currentVideoIndex++;
+            if (currentVideoIndex < secondPartSelectedVideos.length) {
+                form.reset();
+                loadSecondPartVideo();
+            } else {
+                endExperience();
+            }
+        }
+
+        async function saveToFirestore() {
+            let participantData = {
+                participantId: participantId,
+                responses: responses
+            };
+
+            try {
+                await setDoc(doc(db, "participants", participantId), participantData);
+                console.log("Document successfully written!");
+                alert("Vos réponses ont été enregistrées en ligne.");
+            } catch (error) {
+                console.error("Error writing document: ", error);
+                alert("Une erreur s'est produite lors de l'enregistrement de vos réponses.");
+            }
+        }
+
+        function endExperience() {
+            document.getElementById('secondPartPage').classList.add('hidden');
+            document.getElementById('endPage').classList.remove('hidden');
+            saveToFirestore();
+        }
+    </script>
+</body>
+</html>
