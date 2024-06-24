@@ -573,27 +573,43 @@ After watching each video, you will be asked to answer to questions related to t
             }
         }
 
-        async function saveToFirestore() {
-            let participantData = {
-                participantId: participantId,
-                responses: responses
-            };
+        async function createBinAndSaveData() {
+		const url = 'https://api.jsonbin.io/v3/b'; // API endpoint to create a new bin
+		const apiKey = '$2a$10$i/9viBW8IJ2t96HmanCPJeOo6xjWaC6Qx./WqvA/aRagdUb2fvRGC'; // Replace with your JSONBin.io API key
 
-            try {
-                await setDoc(doc(db, "participants", participantId), participantData);
-                console.log("Document successfully written!");
-                alert("Vos réponses ont été enregistrées en ligne.");
-            } catch (error) {
-                console.error("Error writing document: ", error);
-                alert("Une erreur s'est produite lors de l'enregistrement de vos réponses.");
-            }
-        }
+		let participantData = {
+			participantId: participantId,
+			responses: responses
+		};
 
-        function endExperience() {
-            document.getElementById('secondPartPage').classList.add('hidden');
-            document.getElementById('endPage').classList.remove('hidden');
-            saveToFirestore();
-        }
+		try {
+			const response = await fetch(url, {
+				method: 'POST', // Use POST method to create a new bin
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Master-Key': apiKey
+				},
+				body: JSON.stringify(participantData)
+			});
+			if (response.ok) {
+				const jsonResponse = await response.json();
+				console.log("Bin created and data successfully saved to JSONBin!", jsonResponse);
+				alert("Vos réponses ont été enregistrées en ligne.");
+			} else {
+				console.error("Error saving data: ", response.statusText);
+				alert("Une erreur s'est produite lors de l'enregistrement de vos réponses.");
+			}
+		} catch (error) {
+			console.error("Error saving data: ", error);
+			alert("Une erreur s'est produite lors de l'enregistrement de vos réponses.");
+		}
+		}
+
+		function endExperience() {
+			document.getElementById('secondPartPage').classList.add('hidden');
+			document.getElementById('endPage').classList.remove('hidden');
+			createBinAndSaveData(); // Call the function to create bin and save data to JSONBin
+		}
     </script>
 </body>
 </html>
